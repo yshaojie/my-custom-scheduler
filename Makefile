@@ -25,10 +25,6 @@ build: clean ## build binary
 docker-build: build ## Builds docker image for the scheduler
 	docker build -t $(IMAGE):$(TAG) .
 
-.PHONY: fmt
-fmt:
-	@gofmt -s -w ${GOFILES_NOVENDOR}
-
 .PHONY: test
 test:
 	set -o pipefail; go list ./... | xargs -n1 go test ${GOARGS} -v -parallel 1 2>&1 | tee test.txt
@@ -43,5 +39,6 @@ help:
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: run
-run: fmt ## Run a controller from your host.
-	go run ./main.go
+run:  ## Run a controller from your host.
+	 go run cmd/main.go --config=config/kube-scheduler-example-config.yaml
+

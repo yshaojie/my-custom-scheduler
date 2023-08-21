@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-scheduler-nginx
+  labels:
+    app: custom-scheduler-nginx
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: custom-scheduler-nginx
+      labels:
+        app: custom-scheduler-nginx
+    spec:
+      hostNetwork: true
+      schedulerName: my-custom-scheduler
+      containers:
+        - name: custom-scheduler-nginx
+          image: nginx
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: custom-scheduler-nginx
