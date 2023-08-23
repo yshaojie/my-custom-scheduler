@@ -3,7 +3,11 @@ kind: KubeSchedulerConfiguration
 clientConnection:
   kubeconfig: /home/shaojieyue/.kube/config
 leaderElection:
-  leaderElect: false
+  leaderElect: true
+  retryPeriod: 8s
+  resourceName: my-custom-scheduler
+  resourceNamespace: kube-system
+
 profiles:
   - schedulerName: my-custom-scheduler
     plugins:
